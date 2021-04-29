@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 import React from 'react'
+import PropTypes from 'prop-types'
 import {FormattedMessage} from 'react-intl'
 
 import logo from './logo.svg'
 import './App.css'
 
-function App () {
+function App ({basePath = ''}) {
   let searchParams = new URLSearchParams(window.location.search)
 
   const goToPlugin = () => {
     const [pluginRoute, from] = window.location.pathname.endsWith('qiankun1') ? ['qiankun2', 'qiankun1'] : ['qiankun1', 'qiankun2']
-    window.history.pushState({}, `/${pluginRoute}`, `/${pluginRoute}?from=${from}`)
+    window.history.pushState({}, `${pluginRoute}`, `${basePath}/${pluginRoute}?from=${from}`)
     searchParams = new URLSearchParams(window.location.search)
   }
 
@@ -53,6 +54,10 @@ function App () {
       </header>
     </div>
   )
+}
+
+App.propTypes = {
+  basePath: PropTypes.string.isRequired
 }
 
 export default App

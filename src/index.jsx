@@ -29,12 +29,12 @@ import './index.css'
 const navigatorLanguage = navigator.language.substring(0, 2)
 const language = messages[navigatorLanguage] ? navigatorLanguage : 'en'
 
-const rootComponent = (
+const rootComponent = ({basePath}) => (
   <PromiseComponent promiseFunction={messages[language]}>
     {strings => (
       <IntlProvider locale={language} messages={strings}>
         <BrowserRouter basename={process.env.PUBLIC_URL}>
-          <App />
+          <App basePath={basePath} />
         </BrowserRouter>
       </IntlProvider>
     )}
@@ -47,7 +47,7 @@ function retrieveContainer (props) {
 }
 
 function render (props) {
-  ReactDOM.render(rootComponent, retrieveContainer(props))
+  ReactDOM.render(rootComponent(props), retrieveContainer(props))
 }
 
 export async function mount (props) {
